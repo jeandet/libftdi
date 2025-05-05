@@ -1,0 +1,28 @@
+name: GH Actions
+
+on:
+  release:
+    types: [published]
+  push:
+  pull_request:
+
+jobs:
+
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: windows-latest
+          - os: macos-13  # Intel
+          - os: macos-14 # Apple Silicon
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: |
+          pip install meson ninja
+          meson setup builddir --buildtype=release
+          meson compile -C builddir
+          meson test -C builddir
