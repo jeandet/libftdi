@@ -7,7 +7,7 @@ project(
   license : 'GPL2'
 )
 
-libusb_dep = dependency('libusb-1.0')
+libusb_dep = dependency('libusb-1.0', default_options:['tests=false'])
 
 lib_ftdi_inc = include_directories('src')
 
